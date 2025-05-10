@@ -9,6 +9,8 @@ CHUNK_SIZE = 300
 
 # Load the model once to be reused
 embedder = SentenceTransformer("all-MiniLM-L6-v2")
+chroma_client = chromadb.PersistentClient(path=CHROMA_DIR)
+collection = chroma_client.get_or_create_collection(name="news_articles")
 
 
 # Function for generating embeddings and storing in ChromaDB from the JSON data
@@ -53,8 +55,8 @@ def generate_query_embeddings(query):
         query_embedding = embedder.encode([query]).tolist()
 
         # Initialize Chroma client
-        chroma_client = chromadb.PersistentClient(path=CHROMA_DIR)
-        collection = chroma_client.get_or_create_collection(name="news_articles")
+        # chroma_client = chromadb.PersistentClient(path=CHROMA_DIR)
+        # collection = chroma_client.get_or_create_collection(name="news_articles")
 
         # Query ChromaDB for the top documents based on the query's embedding
         results = collection.query(query_embeddings=query_embedding, n_results=5)
