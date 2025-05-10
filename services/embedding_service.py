@@ -4,8 +4,11 @@ from sentence_transformers import SentenceTransformer
 import chromadb
 
 # Path and chunk size for the data
-CHROMA_DIR = "embeddings/news_db"
+BACKEND_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+CHROMA_DIR = os.path.join(BACKEND_ROOT, "embeddings", "news_db")
 CHUNK_SIZE = 300
+
+print("CHROMA_DIR:", CHROMA_DIR)
 
 # Load the model once to be reused
 embedder = SentenceTransformer("all-MiniLM-L6-v2")
